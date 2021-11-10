@@ -8,6 +8,14 @@ Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
 TODO: shapes like Rectangle, Circle, Ellipse are currently ignored
 TODO: maybe it is neccessary to add a dialog box to set the scaling factor in the effect() function 
 depending on the document base unit
+TODO: simpletransform still uses a stand-alone version of cubicsuperpath. Maybe this can be replaced by CubicSuperPath(d) of inkex.paths?
+
+Associated files:
+b2_dxf_outlines.py: this file with the main program
+b2r_dxf_outlines.inx: Inkscape extension definition. This is makes the extension appear in the file-type selector of the save dialog.
+dxf_templates_b2.py: Something like the DXF File template. Contains variables with DXF parts (e.g. header and footer).
+simpletransform.py: Defines several functions to make handling of transform
+attribute easier. 
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,11 +35,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex, simpletransform, dxf_templates_b2, re
 
 
+# define the class of this extension to be a child of inkex.OutputExtension
+# The Inkscape will automatically call the function save() when you execute the extension.
 
-class MyEffect(inkex.OutputExtension):
+class Bb2DXF(inkex.OutputExtension):
 
     def __init__(self):
-        super(MyEffect, self).__init__()
+        super(Bb2DXF, self).__init__()
         self.dxf = ''
         self.handle = 255
         self.flatness = 0.1
@@ -40,9 +50,12 @@ class MyEffect(inkex.OutputExtension):
         
     def save(self, stream):
         self._stream = stream
+        # Stream needs to be in binary format (a bytes-like object is required, not 'str'). Probably because Inkscape opened the output file with "wb" mode. 
+        # At least on Unix systems it works when you encode prepared dxf as utf-8.
         stream.write(self.dxf.encode('utf-8'))
         
-
+    
+    
     def dxf_add(self, str):
         self.dxf += str
 
@@ -101,7 +114,9 @@ class MyEffect(inkex.OutputExtension):
         self.dxf_insert_code( '999', 'Inkscape export via "Better Better DXF Output 2021" (http://tim.cexx.org/?p=590)' )
         self.dxf_add( dxf_templates_b2.r14_header )
 
+        # Older (0.x) Versions of Inkscape needed this scaling factor
         #scale = 25.4/90.0
+        # now (when document unit is set to mm) need this
         scale = 1
         
         h = self.svg.unittouu(self.document.getroot().xpath('@height',namespaces=inkex.NSS)[0])
@@ -152,8 +167,9 @@ class MyEffect(inkex.OutputExtension):
                 layer = 'Default' # Layer 1
 
             d = node.get('d')
-            #p = cubicsuperpath.parsePath(d)
-            #https://github.com/Klowner/inkscape-applytransforms/issues/21
+            # Stand-alone cubicsuperpath is deprecated. 
+            # p = cubicsuperpath.parsePath(d)
+            # https://github.com/Klowner/inkscape-applytransforms/issues/21
             p = inkex.paths.CubicSuperPath(d)
             
             
@@ -165,7 +181,11 @@ class MyEffect(inkex.OutputExtension):
 
             m = [[scale,0,0],[0,-scale,h*scale]]
             simpletransform.applyTransformToPath(m,p)
-
+            
+            # CNC Machines use DXF points (not circles) as coordinates
+            # for drilling. If a layername ends with drill path on that
+            # layer(s) will automatically converted to points. Works best
+            # with small circles or rectangles. 
             if re.search('drill$',layer,re.I) == None:
             #if layer == 'Brackets Drill':
                 self.dxf_path_to_lines(layer,p)
@@ -174,5 +194,6 @@ class MyEffect(inkex.OutputExtension):
 
         self.dxf_add( dxf_templates_b2.r14_footer )
 
+# run the extension
 if __name__ == '__main__':
-    MyEffect().run()
+    Bb2DXF().run()
