@@ -8,6 +8,7 @@ Copy the three files to your inkscape extension folder.
 
 Linux:
 ~/.config/inkscape/extensions/ 
+
 On MacOS:
 /Applications/Inkscape.app/Contents/Resources/share/inkscape/extensions/
 
