@@ -1,0 +1,20 @@
+<inkscape-extension>
+    <_name>Better Better DXF Output 2021/Inkscape 1.1</_name>
+    <id>org.ekips.output.b2_dxf_outlines</id>
+        <dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
+        <dependency type="executable" location="extensions">b2_dxf_outlines.py</dependency>
+        <dependency type="executable" location="extensions">inkex.py</dependency>
+        <dependency type="executable" location="extensions">simpletransform.py</dependency>
+        <dependency type="executable" location="extensions">dxf_templates_b2.py</dependency>
+    <output>
+                <extension>.dxf</extension>
+                <mimetype>image/dxf</mimetype>
+                <_filetypename>Better Better DXF Output 2021 (*.DXF)</_filetypename>
+                <_filetypetooltip>Better Better DXF Output 2021</_filetypetooltip>
+                <dataloss>TRUE</dataloss>
+    </output>
+    <script>
+        <command reldir="extensions" interpreter="python">b2_dxf_outlines.py</command>
+        <helper_extension>org.inkscape.output.svg.inkscape</helper_extension>
+    </script>
+</inkscape-extension>
