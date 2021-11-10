@@ -4,7 +4,7 @@ DXF Exporter for Inkscape (Better Better DXF Output Version2021)
 Updated version of BetterBetterDXFOutput for recent Inkscape versions. Tested with [Inkscape](https://inkscape.org) version 1.1
 
 ## Usage
-Copy the three files to your inkscape extension folder.
+Copy the three files to your inkscape extensions folder.
 
 Linux:
 ~/.config/inkscape/extensions/ 
@@ -12,7 +12,7 @@ Linux:
 MacOS:
 /Applications/Inkscape.app/Contents/Resources/share/inkscape/extensions/
 
-You will see a new filetype (Better Better DXF Output 2021) in the "Save As"/"Save a copy" dialog.
+You will see a new filetype (Better Better DXF Output 2021) in the "Save As"/"Save a copy" dialog. Maybe a restart of inkscape is necessary.
 
 You need to ungroup everything and convert all objects to paths. The extension omits shapes (circles, rectangles, etc). 
 
