@@ -9,7 +9,7 @@ Copy the three files to your inkscape extension folder.
 Linux:
 ~/.config/inkscape/extensions/ 
 
-On MacOS:
+MacOS:
 /Applications/Inkscape.app/Contents/Resources/share/inkscape/extensions/
 
 You will see a new filetype (Better Better DXF Output 2021) in the "Save As"/"Save a copy" dialog.
@@ -21,7 +21,7 @@ CNC Machines use DXF points (not circles) as coordinates for drilling. If a laye
 
 ## Credits
 
-A big thank you for earlier versions an contributions goes out to
+A big thank you for earlier versions and contributions goes out to
 
 Aaron Spike, Alvin Penner, Bob Cook , Tim Gipson, Jean-Francois Barraud, Chris Madsen, Andreas, Linda Moehsmer, Jamie Tremaine
 
