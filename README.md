@@ -27,6 +27,8 @@ You will see a new filetype (Better Better DXF Output 2021) in the "Save As"/"Sa
 
 You need to ungroup everything and convert all objects to paths. The extension omits shapes (circles, rectangles, etc). 
 
+Make sure that the Units of the SVG document are set to "mm" and the x any scaling is set to 1 (File-> Document Settings->Page Tab / Datei -> Dokumenteneinstellungen -> Seite). If you open a SVG file that was created with an older Inkscape version the scaling might be set to something else than 1.
+
 ### Drilling ###
 
 CNC Machines use DXF points (not circles) as coordinates for drilling. If a layername ends with drill then all path on these layer(s) will automatically be converted to points. Works best with small circles or rectangles.
