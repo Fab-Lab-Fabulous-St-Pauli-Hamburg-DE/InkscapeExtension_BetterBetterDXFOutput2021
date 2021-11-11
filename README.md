@@ -40,4 +40,4 @@ Aaron Spike, Alvin Penner, Bob Cook , Tim Gipson, Jean-Francois Barraud, Chris M
 
 ## More information
 
-For details refer to https://www.fablab-hamburg.org/better-better-dxf-output-2021/
+For details refer to https://www.fablab-hamburg.org/better-better-dxf-output-2021/ and the [repository wiki](https://github.com/Fab-Lab-Fabulous-St-Pauli-Hamburg-DE/InkscapeExtension_BetterBetterDXFOutput2021/wiki)
