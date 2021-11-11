@@ -36,7 +36,7 @@ CNC Machines use DXF points (not circles) as coordinates for drilling. If a laye
 
 A big thank You for earlier versions and contributions goes out to
 
-Aaron Spike, Alvin Penner, Bob Cook , Tim Gipson, Jean-Francois Barraud, Chris Madsen, Andreas, Linda Moehsmer, Jamie Tremaine
+Aaron Spike, Alvin Penner, Bob Cook , Tim Gipson, Simon Arthur, Jean-Francois Barraud, Chris Madsen, Andreas, Linda Moehsmer, Jamie Tremaine
 
 ## More information
 
