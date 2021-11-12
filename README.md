@@ -33,7 +33,7 @@ If you open a SVG file that was created with an older Inkscape version and the s
 
 ### Drilling ###
 
-CNC Machines use DXF points (not circles) as coordinates for drilling. If a layername ends with drill then all path on these layer(s) will automatically be converted to points. Works best with small circles or rectangles.
+CNC Machines use DXF points (not circles) as coordinates for drilling. If a layername ends with *drill* then all path on these layer(s) will automatically be converted to points. Works best with small circles or rectangles.
 
 
 ## Credits
