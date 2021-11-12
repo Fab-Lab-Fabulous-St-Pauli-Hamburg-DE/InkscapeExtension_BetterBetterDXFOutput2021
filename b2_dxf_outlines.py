@@ -4,7 +4,8 @@ Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
 - template dxf_outlines.dxf added Feb 2008 by Alvin Penner, penner@vaxxine.com
 - layers, transformation, flattening added April 2008 by Bob Cook, bob@bobcookdev.com
 - improved layering support added Feb 2009 by T. R. Gipson, drmn4ea at google mail
-- updated due to deprication warnings etc. Now Inkscape 1.1 compatible. Oct 2021 by Axel Sylvester bbdfx at fablab-hamburg.org
+- (1.1.2) updated due to deprication warnings etc. Now Inkscape 1.1 compatible. Oct 2021 by Axel Sylvester bbdfx at fablab-hamburg.org
+
 TODO: shapes like Rectangle, Circle, Ellipse are currently ignored
 TODO: maybe it is neccessary to add a dialog box to set the scaling factor in the effect() function 
 depending on the document base unit
@@ -42,6 +43,7 @@ class Bb2DXF(inkex.OutputExtension):
 
     def __init__(self):
         super(Bb2DXF, self).__init__()
+        self.__version__ = "1.1.2"
         self.dxf = ''
         self.handle = 255
         self.flatness = 0.1
@@ -111,13 +113,38 @@ class Bb2DXF(inkex.OutputExtension):
         self.dxf_point(layer,x,y)
 
     def effect(self):
-        self.dxf_insert_code( '999', 'Inkscape export via "Better Better DXF Output 2021" (http://tim.cexx.org/?p=590)' )
+        svg_version = self.document.getroot().xpath("@id",namespaces=inkex.NSS)[0]
+        
+        #self.dxf_insert_code( '1001',  str(svg_version))
+        #self.dxf_insert_code( '1000',  str(svg_version=="svg2"))
+        
+        # at least if document unit is set to mm
+        
+        if str(svg_version)=="svg2":
+             svgBase='on old inkscape svg file'
+             #self.dxf_insert_code( '1000',  svgBase)
+             # Older (0.x) Versions of Inkscape needed this scaling factor
+             # at least if document unit is set to mm
+             scale = 25.4/90.0
+        elif str(svg_version)=="svg110":
+             #Todo: if inkscape sets the number in the id tag according to it's version number
+             # we could strip svg and interpret the remaining number as int. 
+             # But taht would assume that Inksacpe only uses one digit sub versionnumbers. E.g. V 1.10.1 would be greater than V1.2.1
+             svgBase = 'inkscape version 1.1 svg file'
+             #self.dxf_insert_code( '1000',  svgBase)
+             # at least if document unit is set to mm
+             # might be different if document unit is set to inch or px
+             scale = 1
+        else:
+             svgBase = 'unknown svg version (scale might be wrong)'
+             #self.dxf_insert_code( '1000',  svgBase)
+             # at least if document unit is set to mm
+             # might be different if document unit is set to inch or px
+             scale = 1
+        self.dxf_insert_code( '999', 'Inkscape export of an '+ svgBase + ' via "Better Better DXF Output 2021" (https://github.com/Fab-Lab-Fabulous-St-Pauli-Hamburg-DE/InkscapeExtension_BetterBetterDXFOutput2021)' )
         self.dxf_add( dxf_templates_b2.r14_header )
 
-        # Older (0.x) Versions of Inkscape needed this scaling factor
-        #scale = 25.4/90.0
-        # now (when document unit is set to mm) need this
-        scale = 1
+        
         
         h = self.svg.unittouu(self.document.getroot().xpath('@height',namespaces=inkex.NSS)[0])
 
