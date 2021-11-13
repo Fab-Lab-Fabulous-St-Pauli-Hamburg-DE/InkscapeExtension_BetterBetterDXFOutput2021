@@ -7,9 +7,9 @@ Updated version of BetterBetterDXFOutput for recent Inkscape versions. Tested wi
 
 Copy the following four files to your inkscape extensions folder. 
 
-**b2_dxf_outlines.py** (Main program file)
+**b2_dxf_outlines.py** (Main program file.)
 
-**b2r_dxf_outlines.inx** (Extension description. This file makes the extension known to inkscape)
+**b2r_dxf_outlines.inx** (Extension description. This file makes the extension known to inkscape.)
 
 **dxf_templates_b2.py** (A DXF Template. It is used to generate the DXF output.)
 
