@@ -20,7 +20,7 @@ Linux:
 ~/.config/inkscape/extensions/ 
 
 MacOS:
-/Applications/Inkscape.app/Contents/Resources/share/inkscape/extensions/
+/Applications/Inkscape.app/Contents/Resources/share/inkscape/extensions/ (To open this folder in finder go to your Applications folder, hold down the ctrl key and click on the Inkscape icon (or right click on it). A menu will appear. Choose "Show Package Contents" and navigate to the extensions folder.)
 
 ## Usage ##
 You will see a new filetype (Better Better DXF Output 2021) in the "Save As"/"Save a copy" dialog. Maybe a restart of inkscape is necessary.
