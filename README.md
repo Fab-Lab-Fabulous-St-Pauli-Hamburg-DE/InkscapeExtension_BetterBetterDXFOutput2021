@@ -1,7 +1,13 @@
-# Inkscape Extension BetterBetterDXFOutput (b2_dxf) 2021
-DXF Exporter for Inkscape (Better Better DXF Output Version2021)
+# Inkscape Extension Better Better DXF Output 2023
 
-Updated version of BetterBetterDXFOutput for recent Inkscape versions. Tested with [Inkscape](https://inkscape.org) version 1.1
+DXF Exporter for Inkscape 
+
+Updated version of BetterBetterDXFOutput for Inkscape 1.2
+
+changes of this fork:
+* fix for Inkscape 1.2
+* export in layer 0
+* calculate correct scaling fpr output in mm
 
 ## Installation ##
 

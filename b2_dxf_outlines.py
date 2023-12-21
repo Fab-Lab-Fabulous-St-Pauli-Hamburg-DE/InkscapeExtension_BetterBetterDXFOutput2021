@@ -4,11 +4,10 @@ Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
 - template dxf_outlines.dxf added Feb 2008 by Alvin Penner, penner@vaxxine.com
 - layers, transformation, flattening added April 2008 by Bob Cook, bob@bobcookdev.com
 - improved layering support added Feb 2009 by T. R. Gipson, drmn4ea at google mail
-- (1.1.2) updated due to deprication warnings etc. Now Inkscape 1.1 compatible. Oct 2021 by Axel Sylvester bbdfx at fablab-hamburg.org
+- (1.1.2) updated due to deprication warnings etc. Now Inkscape 1.1 compatible. Oct 2021 by Axel Sylvester bbdfx at fablab-hamburg.org#
+- (1.2) updated to Inkscape 2.x, fix scaling issue, export to layer0. Dec 2023 Andreas Kahler andreas at fablab-muenchen.de
 
 TODO: shapes like Rectangle, Circle, Ellipse are currently ignored
-TODO: maybe it is neccessary to add a dialog box to set the scaling factor in the effect() function 
-depending on the document base unit
 TODO: simpletransform still uses a stand-alone version of cubicsuperpath. Maybe this can be replaced by CubicSuperPath(d) of inkex.paths?
 
 Associated files:
@@ -43,7 +42,7 @@ class Bb2DXF(inkex.OutputExtension):
 
     def __init__(self):
         super(Bb2DXF, self).__init__()
-        self.__version__ = "1.1.2"
+        self.__version__ = "1.2"
         self.dxf = ''
         self.handle = 255
         self.flatness = 0.1
@@ -126,26 +125,16 @@ class Bb2DXF(inkex.OutputExtension):
              # Older (0.x) Versions of Inkscape needed this scaling factor
              # at least if document unit is set to mm
              scale = 25.4/90.0
-        elif str(svg_version)=="svg110":
-             #Todo: if inkscape sets the number in the id tag according to it's version number
-             # we could strip svg and interpret the remaining number as int. 
-             # But taht would assume that Inksacpe only uses one digit sub versionnumbers. E.g. V 1.10.1 would be greater than V1.2.1
-             svgBase = 'inkscape version 1.1 svg file'
-             #self.dxf_insert_code( '1000',  svgBase)
-             # at least if document unit is set to mm
-             # might be different if document unit is set to inch or px
-             scale = 1
         else:
-             svgBase = 'unknown svg version (scale might be wrong)'
-             #self.dxf_insert_code( '1000',  svgBase)
-             # at least if document unit is set to mm
-             # might be different if document unit is set to inch or px
-             scale = 1
-        self.dxf_insert_code( '999', 'Inkscape export of an '+ svgBase + ' via "Better Better DXF Output 2021" (https://github.com/Fab-Lab-Fabulous-St-Pauli-Hamburg-DE/InkscapeExtension_BetterBetterDXFOutput2021)' )
+             svgBase = 'Inkscape svg file'
+             scale = self.svg.viewport_to_unit(1, unit="mm")
+
+        self.dxf_insert_code( '999', 
+            'Inkscape export of an ' + svgBase + ' via Better Better DXF Output 2023. ' +    
+            'https://github.com/drayde/InkscapeExtension_BetterBetterDXFOutput2023'
+            )
         self.dxf_add( dxf_templates_b2.r14_header )
 
-        
-        
         h = self.svg.unittouu(self.document.getroot().xpath('@height',namespaces=inkex.NSS)[0])
 
         path = '//svg:path'
@@ -156,7 +145,7 @@ class Bb2DXF(inkex.OutputExtension):
 
             layer = node.getparent().get(inkex.addNS('label','inkscape'))
             if layer == None:
-                layer = 'Default'
+                layer = '0'
 
             if not layer in layers:
                 layers.append(layer)
@@ -191,7 +180,7 @@ class Bb2DXF(inkex.OutputExtension):
 
             layer = node.getparent().get(inkex.addNS('label','inkscape'))
             if layer == None:
-                layer = 'Default' # Layer 1
+                layer = '0' # standard layer
 
             d = node.get('d')
             # Stand-alone cubicsuperpath is deprecated. 
