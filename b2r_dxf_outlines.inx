@@ -3,7 +3,6 @@
     <id>org.ekips.output.b2_dxf_outlines</id>
         <dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
         <dependency type="executable" location="extensions">b2_dxf_outlines.py</dependency>
-        <dependency type="executable" location="extensions">inkex.py</dependency>
         <dependency type="executable" location="extensions">simpletransform.py</dependency>
         <dependency type="executable" location="extensions">dxf_templates_b2.py</dependency>
     <output>
